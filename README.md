@@ -59,7 +59,21 @@ devvit login
 ### Running Locally
 
 ```bash
-devvit playtest <target-subreddit>
-```
-
 Navigate to your target subreddit and watch the logs in your terminal. Submit test comments to test the pipeline.
+
+## ❓ Troubleshooting
+
+### 1. "NaN" error or Rendering Crash
+If the Dashboard or Alert list fails to render and shows `NaN` values in the browser console:
+- **Solution:** Hard-refresh (Ctrl+F5) the Reddit page. This is usually due to a Devvit virtual-DOM reconciliation mismatch during a live reload.
+
+### 2. Toxicity Scores Not Appearing
+If you see Spam scores but Toxicity shows as 0% or N/A:
+- **Solution:** Verify your **Google Perspective API Key** is correctly pasted into the App Settings in Mod Tools. Check the Devvit logs for any `403 Forbidden` or `401 Unauthorized` errors.
+
+## 📧 Support & Feedback
+
+For bug reports or feature requests, please reach out via [Modmail](https://www.reddit.com/message/compose?to=/r/AntiGravityShield) or open an issue on the repository.
+
+---
+🛡️ **Built with ❤️ by the AntiGravity Team**
