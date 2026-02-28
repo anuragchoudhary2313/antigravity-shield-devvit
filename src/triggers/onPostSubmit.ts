@@ -9,6 +9,7 @@ import { Devvit, TriggerContext } from '@devvit/public-api';
 import { runFlaggingPipeline } from '../services/flaggingPipeline.js';
 import type { UserProfile } from '../services/userRiskService.js';
 import { isDuplicate, markProcessed, sanitiseText } from '../utils/guards.js';
+import { recordUserActivity, getRecentActivityCount } from '../utils/analyticsHelpers.js';
 
 export function registerPostTrigger(): void {
   Devvit.addTrigger({
@@ -17,8 +18,9 @@ export function registerPostTrigger(): void {
       try {
         const postData = event.post;
         const authorData = event.author;
+        const subredditId = event.subreddit?.id;
 
-        if (!postData?.id || !authorData?.id) {
+        if (!postData?.id || !authorData?.id || !subredditId) {
           return;
         }
 
@@ -27,11 +29,14 @@ export function registerPostTrigger(): void {
           return;
         }
 
-        // Guard: sanitise and truncate text (title + self-text)
         const textToScan = sanitiseText(
           [postData.title, postData.selftext].filter(Boolean).join(' '),
         );
         if (!textToScan) return;
+
+        // Track and fetch user's recent activity rate
+        await recordUserActivity(context.kvStore, subredditId, authorData.id);
+        const recentCommentCount = await getRecentActivityCount(context.kvStore, subredditId, authorData.id);
 
         const post = await context.reddit.getPostById(postData.id);
         const user = await context.reddit.getUserById(authorData.id);
@@ -47,7 +52,7 @@ export function registerPostTrigger(): void {
         await runFlaggingPipeline(
           textToScan,
           userProfile,
-          0,
+          recentCommentCount,
           post,
           context as unknown as Devvit.Context,
           apiKey,

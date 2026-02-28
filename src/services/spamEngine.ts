@@ -91,9 +91,13 @@ function scoreRepeatedWords(text: string): { score: number; reason: string | nul
     }
   }
 
+  // If no word repeats more than once, it's not repeated
+  if (maxRepeat <= 1) return { score: 0, reason: null };
+
   const repeatRatio = maxRepeat / words.length;
   // If > 40% of all words are the same word, that's highly suspicious
-  const raw = clamp(Math.round(repeatRatio * 200), 0, 100);
+  // The baseline repeat is ignored, only excessive repeats are scored
+  const raw = clamp(Math.round((repeatRatio - 0.2) * 200), 0, 100);
 
   return {
     score: raw,

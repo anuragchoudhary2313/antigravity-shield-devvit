@@ -1,0 +1,77 @@
+
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90mC:/Users/anura/OneDrive/Desktop/REddit/antigravity-shield[39m
+
+[90mstdout[2m | src/services/flaggingPipeline.test.ts[2m > [22m[2mFlagging Pipeline[2m > [22m[2mThreshold & Reporting Behaviours[2m > [22m[2mflags and reports a comment when the score > threshold
+[22m[39m[AntiGravity] Pipeline start — thing=t1_mock, author=u/test_author
+
+[90mstdout[2m | src/services/flaggingPipeline.test.ts[2m > [22m[2mFlagging Pipeline[2m > [22m[2mThreshold & Reporting Behaviours[2m > [22m[2mflags and reports a comment when the score > threshold
+[22m[39m[AntiGravity]   Spam score=80 reasons=[Spammy]
+
+[90mstdout[2m | src/services/flaggingPipeline.test.ts[2m > [22m[2mFlagging Pipeline[2m > [22m[2mThreshold & Reporting Behaviours[2m > [22m[2mflags and reports a comment when the score > threshold
+[22m[39m[AntiGravity]   Toxicity=0.9 fromApi=true
+
+[90mstdout[2m | src/services/flaggingPipeline.test.ts[2m > [22m[2mFlagging Pipeline[2m > [22m[2mThreshold & Reporting Behaviours[2m > [22m[2mflags and reports a comment when the score > threshold
+[22m[39m[AntiGravity]   UserRisk score=90 tier=RED
+
+[90mstdout[2m | src/services/flaggingPipeline.test.ts[2m > [22m[2mFlagging Pipeline[2m > [22m[2mThreshold & Reporting Behaviours[2m > [22m[2mflags and reports a comment when the score > threshold
+[22m[39m[AntiGravity] ⚠️ FLAGGED (score=86): Spammy; New account; Toxicity: 90%
+[AntiGravity] Pipeline complete in 3ms
+
+[90mstdout[2m | src/services/flaggingPipeline.test.ts[2m > [22m[2mFlagging Pipeline[2m > [22m[2mThreshold & Reporting Behaviours[2m > [22m[2mflags and reports a comment when the score > threshold
+[22m[39mTEST 1 RESULT: {"finalScore":86,"flagged":true,"spam":{"score":80,"reasons":["Spammy"],"breakdown":{"urlDensity":80,"capsRatio":0,"repeatedWords":0,"keywordHits":0},"matchedKeywords":[]},"toxicity":{"toxicity":0.9,"insult":0.5,"profanity":0.1,"fromApi":true},"userRisk":{"score":90,"tier":"RED","reasons":["New account"]},"reasonSummary":"Spammy; New account; Toxicity: 90%"}
+
+[90mstdout[2m | src/services/flaggingPipeline.test.ts[2m > [22m[2mFlagging Pipeline[2m > [22m[2mThreshold & Reporting Behaviours[2m > [22m[2mpasses silently when the score < threshold
+[22m[39m[AntiGravity] Pipeline start — thing=t1_mock, author=u/test_author
+
+[90mstdout[2m | src/services/flaggingPipeline.test.ts[2m > [22m[2mFlagging Pipeline[2m > [22m[2mThreshold & Reporting Behaviours[2m > [22m[2mpasses silently when the score < threshold
+[22m[39m[AntiGravity]   Spam score=0 reasons=[]
+
+[90mstdout[2m | src/services/flaggingPipeline.test.ts[2m > [22m[2mFlagging Pipeline[2m > [22m[2mThreshold & Reporting Behaviours[2m > [22m[2mpasses silently when the score < threshold
+[22m[39m[AntiGravity]   Toxicity=0.1 fromApi=false
+[AntiGravity]   UserRisk score=0 tier=GREEN
+
+[90mstdout[2m | src/services/flaggingPipeline.test.ts[2m > [22m[2mFlagging Pipeline[2m > [22m[2mThreshold & Reporting Behaviours[2m > [22m[2mpasses silently when the score < threshold
+[22m[39m[AntiGravity] ✅ PASS (score=4) — below threshold
+[AntiGravity] Pipeline complete in 1ms
+
+[90mstdout[2m | src/services/flaggingPipeline.test.ts[2m > [22m[2mFlagging Pipeline[2m > [22m[2mThreshold & Reporting Behaviours[2m > [22m[2msupports custom thresholds via KV store settings
+[22m[39m[AntiGravity] Pipeline start — thing=t1_mock, author=u/test_author
+
+[90mstdout[2m | src/services/flaggingPipeline.test.ts[2m > [22m[2mFlagging Pipeline[2m > [22m[2mThreshold & Reporting Behaviours[2m > [22m[2msupports custom thresholds via KV store settings
+[22m[39m[AntiGravity]   Spam score=15 reasons=[]
+
+[90mstdout[2m | src/services/flaggingPipeline.test.ts[2m > [22m[2mFlagging Pipeline[2m > [22m[2mThreshold & Reporting Behaviours[2m > [22m[2msupports custom thresholds via KV store settings
+[22m[39m[AntiGravity]   Toxicity=0 fromApi=false
+[AntiGravity]   UserRisk score=0 tier=GREEN
+
+[90mstdout[2m | src/services/flaggingPipeline.test.ts[2m > [22m[2mFlagging Pipeline[2m > [22m[2mThreshold & Reporting Behaviours[2m > [22m[2msupports custom thresholds via KV store settings
+[22m[39m[AntiGravity] ⚠️ FLAGGED (score=6): No specific signals triggered.
+[AntiGravity] Pipeline complete in 1ms
+
+[90mstdout[2m | src/services/flaggingPipeline.test.ts[2m > [22m[2mFlagging Pipeline[2m > [22m[2mThreshold & Reporting Behaviours[2m > [22m[2mbypasses reporting if autoReport is turned off by mods
+[22m[39m[AntiGravity] Pipeline start — thing=t1_mock, author=u/test_author
+
+[90mstdout[2m | src/services/flaggingPipeline.test.ts[2m > [22m[2mFlagging Pipeline[2m > [22m[2mThreshold & Reporting Behaviours[2m > [22m[2mbypasses reporting if autoReport is turned off by mods
+[22m[39m[AntiGravity]   Spam score=100 reasons=[Spammy]
+
+[90mstdout[2m | src/services/flaggingPipeline.test.ts[2m > [22m[2mFlagging Pipeline[2m > [22m[2mThreshold & Reporting Behaviours[2m > [22m[2mbypasses reporting if autoReport is turned off by mods
+[22m[39m[AntiGravity]   Toxicity=0.99 fromApi=true
+
+[90mstdout[2m | src/services/flaggingPipeline.test.ts[2m > [22m[2mFlagging Pipeline[2m > [22m[2mThreshold & Reporting Behaviours[2m > [22m[2mbypasses reporting if autoReport is turned off by mods
+[22m[39m[AntiGravity]   UserRisk score=100 tier=RED
+
+[90mstdout[2m | src/services/flaggingPipeline.test.ts[2m > [22m[2mFlagging Pipeline[2m > [22m[2mThreshold & Reporting Behaviours[2m > [22m[2mbypasses reporting if autoReport is turned off by mods
+[22m[39m[AntiGravity] ✅ PASS (score=100) — below threshold
+[AntiGravity] Pipeline complete in 1ms
+
+ [31m❯[39m src/services/flaggingPipeline.test.ts [2m([22m[2m4 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 16[2mms[22m[39m
+       [32m✓[39m flags and reports a comment when the score > threshold[32m 5[2mms[22m[39m
+[31m       [31m×[31m passes silently when the score < threshold[39m[32m 7[2mms[22m[39m
+       [32m✓[39m supports custom thresholds via KV store settings[32m 1[2mms[22m[39m
+       [32m✓[39m bypasses reporting if autoReport is turned off by mods[32m 2[2mms[22m[39m
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m3 passed[39m[22m[90m (4)[39m
+[2m   Start at [22m 17:13:45
+[2m   Duration [22m 392ms[2m (transform 152ms, setup 0ms, import 196ms, tests 16ms, environment 0ms)[22m
+

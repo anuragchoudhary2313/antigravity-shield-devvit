@@ -317,3 +317,60 @@ export async function setCachedUserRisk(
     // Degrade silently
   }
 }
+
+// ── User Activity Rate Tracking ────────────────────────────
+
+const RATE_WINDOW_MS = 24 * 60 * 60 * 1000; // 24 hours
+const MAX_ACTIVITY_HISTORY = 50; // Cap array growth
+
+export function userActivityKey(subredditId: string, userId: string): string {
+  return `activity:${subredditId}:${userId}`;
+}
+
+/** Record a new activity (post/comment) timestamp for a user. */
+export async function recordUserActivity(
+  kv: KV,
+  subredditId: string,
+  userId: string,
+): Promise<void> {
+  const key = userActivityKey(subredditId, userId);
+  const now = Date.now();
+  try {
+    const raw = await kv.get(key);
+    let timestamps: number[] = Array.isArray(raw) ? (raw as number[]) : [];
+
+    // Cull timestamps older than 24h
+    timestamps = timestamps.filter(t => now - t < RATE_WINDOW_MS);
+
+    // Add current activity
+    timestamps.push(now);
+
+    // Cap memory footprint
+    if (timestamps.length > MAX_ACTIVITY_HISTORY) {
+      timestamps = timestamps.slice(-MAX_ACTIVITY_HISTORY);
+    }
+
+    await kv.put(key, toJSON(timestamps));
+  } catch {
+    // Degrade silently
+  }
+}
+
+/** Get count of user's activities in the last 24h. */
+export async function getRecentActivityCount(
+  kv: KV,
+  subredditId: string,
+  userId: string,
+): Promise<number> {
+  const key = userActivityKey(subredditId, userId);
+  const now = Date.now();
+  try {
+    const raw = await kv.get(key);
+    const timestamps: number[] = Array.isArray(raw) ? (raw as number[]) : [];
+
+    // Return count of valid timestamps within the window
+    return timestamps.filter(t => now - t < RATE_WINDOW_MS).length;
+  } catch {
+    return 0;
+  }
+}
