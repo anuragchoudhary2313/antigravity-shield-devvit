@@ -72,14 +72,7 @@ Devvit.addCustomPostType({
   height: 'tall',
   render: (context) => {
     const [view, setView] = useState<AppView>('dashboard');
-    const [subredditId, setSubredditId] = useState<string>('');
-
-    // Resolve subreddit ID on first render
-    if (!subredditId) {
-      context.reddit.getCurrentSubreddit().then((sub) => {
-        setSubredditId(sub.id);
-      });
-    }
+    const subredditId = context.subredditId;
 
     // Show a loading state until we have the subreddit ID
     if (!subredditId) {

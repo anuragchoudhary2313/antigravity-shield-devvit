@@ -64,10 +64,14 @@ function KpiCard(props: {
 }
 
 /** A single alert row. */
-function AlertRow(props: { alert: AlertEntry }): JSX.Element {
+function AlertRow(props: { alert: AlertEntry; key?: string }): JSX.Element {
   const { alert } = props;
+  const score = Number(alert?.score) || 0;
+  const author = alert?.authorName || '[deleted]';
+  const reason = alert?.reason || 'No reason provided';
+
   const scoreColor =
-    alert.score >= 60 ? COLORS.danger : alert.score >= 30 ? COLORS.warning : COLORS.safe;
+    score >= 60 ? COLORS.danger : score >= 30 ? COLORS.warning : COLORS.safe;
 
   return (
     <hstack
@@ -81,17 +85,17 @@ function AlertRow(props: { alert: AlertEntry }): JSX.Element {
       {/* Score badge */}
       <hstack padding="xsmall" cornerRadius="small" backgroundColor={scoreColor}>
         <text size="small" weight="bold" color="white">
-          {alert.score}
+          {score}
         </text>
       </hstack>
 
       {/* Details */}
       <vstack grow gap="none">
         <text size="small" weight="bold" color={COLORS.textPrimary}>
-          u/{alert.authorName}
+          u/{author}
         </text>
         <text size="xsmall" color={COLORS.textSecondary}>
-          {alert.reason.length > 60 ? alert.reason.slice(0, 57) + '…' : alert.reason}
+          {reason.length > 60 ? reason.slice(0, 57) + '…' : reason}
         </text>
       </vstack>
     </hstack>
@@ -99,7 +103,10 @@ function AlertRow(props: { alert: AlertEntry }): JSX.Element {
 }
 
 /** A single offender row. */
-function OffenderRow(props: { entry: OffenderEntry; rank: number }): JSX.Element {
+function OffenderRow(props: { entry: OffenderEntry; rank: number; key?: string }): JSX.Element {
+  const username = props.entry?.username || '[deleted]';
+  const flagCount = Number(props.entry?.flagCount) || 0;
+
   return (
     <hstack
       width="100%"
@@ -111,11 +118,11 @@ function OffenderRow(props: { entry: OffenderEntry; rank: number }): JSX.Element
         #{props.rank}
       </text>
       <text size="small" color={COLORS.textPrimary} grow>
-        u/{props.entry.username}
+        u/{username}
       </text>
       <hstack padding="xsmall" cornerRadius="small" backgroundColor={COLORS.danger}>
         <text size="xsmall" weight="bold" color="white">
-          {props.entry.flagCount} flags
+          {flagCount} flags
         </text>
       </hstack>
     </hstack>
@@ -150,8 +157,17 @@ export function Dashboard(props: DashboardProps): JSX.Element {
     return JSON.parse(JSON.stringify(result));
   });
 
-  // Cast and default while loading
-  const s = (summaryData as DailySummary | null) ?? { scanned: 0, flagged: 0, avgToxicity: 0, date: '', apiCalls: 0 };
+  // ── Safety Guards ──────────────────────────────────────────
+
+  // Default summary structure to prevent property-of-undefined errors
+  const emptySummary: DailySummary = { scanned: 0, flagged: 0, apiCalls: 0, avgToxicity: 0, date: '' };
+  const s = (summaryData as DailySummary | null) ?? emptySummary;
+
+  // Ensure we are working with safe numbers (guard against bad JSON/missing state)
+  const scanned = Number(s?.scanned) || 0;
+  const flagged = Number(s?.flagged) || 0;
+  const avgTox = Number(s?.avgToxicity) || 0;
+
   const alertList = (alertsData as AlertEntry[] | null) ?? [];
   const offenderList = (offendersData as OffenderEntry[] | null) ?? [];
 
@@ -175,16 +191,16 @@ export function Dashboard(props: DashboardProps): JSX.Element {
 
       {/* ── KPI Cards ── */}
       <hstack width="100%" gap="small">
-        <KpiCard label="Scanned (24h)" value={s.scanned.toLocaleString()} />
+        <KpiCard label="Scanned (24h)" value={scanned.toLocaleString()} />
         <KpiCard
           label="Flagged"
-          value={s.flagged.toLocaleString()}
-          color={s.flagged > 0 ? COLORS.danger : COLORS.safe}
+          value={flagged.toLocaleString()}
+          color={flagged > 0 ? COLORS.danger : COLORS.safe}
         />
         <KpiCard
           label="Avg Toxicity"
-          value={`${Math.round(s.avgToxicity * 100)}%`}
-          color={s.avgToxicity > 0.5 ? COLORS.danger : s.avgToxicity > 0.2 ? COLORS.warning : COLORS.safe}
+          value={`${Math.round(avgTox * 100)}%`}
+          color={avgTox > 0.5 ? COLORS.danger : avgTox > 0.2 ? COLORS.warning : COLORS.safe}
         />
       </hstack>
 
