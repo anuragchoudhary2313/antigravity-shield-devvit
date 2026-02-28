@@ -30,13 +30,13 @@ It silently watches all new posts and comments, evaluates them using a multi-eng
 
 ## ⚙️ Configuration
 
-After installation, go to your subreddit's Mod Tools and access the AntiGravity Shield Dashboard.
+After installation, you **MUST** configure the application before it will actively catch toxicity:
 
-1. **Provide an API Key:** Provide a valid Google Perspective API key in the Devvit settings. Without it, AntiGravity Shield will fall back quietly to Spam-scoring only.
-2. **Access the Dashboard:** Go to your Subreddit's menu and launch the `🚀 AntiGravity Shield Dashboard`.
-3. **Customize Settings:** Navigate to the **Configuration Settings** panel.
-   - Adjust the **Spam Threshold** (default 70).
-   - Adjust the **Toxicity Threshold** (default 85).
+1. **Provide an API Key (CRITICAL):** Go to your subreddit's **Mod Tools → App Settings** and paste a valid Google Perspective API key into the `Google Perspective API Key` secret field. *Without this key, AntiGravity Shield will silently fall back to Spam-scoring only, and NLP-based toxicity flags will not be triggered.*
+2. **Access the Dashboard:** Go to your Subreddit's menu and launch the `🚀 AntiGravity Shield Dashboard` custom view.
+3. **Customize Settings:** Navigate to the **Configuration Settings** panel inside the Dashboard.
+   - Adjust the **Spam Threshold** (default: 70).
+   - Adjust the **Toxicity Threshold** (default: 85).
    - Add targeted **Custom Blocklist** keywords specifically for your community.
 
 ## 🛡️ Privacy & Compliance

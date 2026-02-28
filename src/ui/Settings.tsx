@@ -10,7 +10,7 @@
 // flagging pipeline at scan time.
 // ─────────────────────────────────────────────────────────────
 
-import { Devvit, useState, useAsync } from '@devvit/public-api';
+import { Devvit, useState, useAsync, useForm } from '@devvit/public-api';
 import { settingsKey } from '../utils/kvSchema.js';
 import {
   DEFAULT_SPAM_THRESHOLD,
@@ -78,6 +78,26 @@ export function Settings(props: SettingsProps): JSX.Element {
     saved.customBlocklist.join(', '),
   );
   const [statusMsg, setStatusMsg] = useState<string>('');
+
+  // ── Forms ────────────────────────────────────────────────
+  const blocklistForm = useForm(
+    {
+      title: 'Edit Custom Blocklist',
+      fields: [
+        {
+          type: 'string',
+          name: 'keywords',
+          label: 'Comma-separated keywords',
+          defaultValue: blocklistText,
+        },
+      ],
+      acceptLabel: 'Save Keywords',
+    },
+    (values) => {
+      setBlocklistText((values.keywords as string) || '');
+      setStatusMsg('Keywords updated locally. Press Save Changes to apply.');
+    }
+  );
 
   // ── Handlers ─────────────────────────────────────────────
 
@@ -219,12 +239,15 @@ export function Settings(props: SettingsProps): JSX.Element {
 
       {/* ── Custom Blocklist ── */}
       <vstack width="100%" gap="small" backgroundColor={COLORS.cardBg} cornerRadius="medium" padding="medium">
-        <text size="medium" weight="bold" color={COLORS.textPrimary}>
-          Custom Blocklist
-        </text>
-        <text size="xsmall" color={COLORS.textSecondary}>
-          Comma-separated keywords. These are added to the default blocklist.
-        </text>
+        <hstack width="100%" alignment="center middle">
+          <vstack grow gap="none">
+            <text size="medium" weight="bold" color={COLORS.textPrimary}>Custom Blocklist</text>
+            <text size="xsmall" color={COLORS.textSecondary}>Comma-separated keywords.</text>
+          </vstack>
+          <button size="small" appearance="bordered" onPress={() => context.ui.showForm(blocklistForm)}>
+            Edit Keywords
+          </button>
+        </hstack>
         <hstack width="100%" padding="small" cornerRadius="small" backgroundColor={COLORS.inputBg}>
           <text size="small" color={COLORS.textPrimary} wrap>
             {blocklistText || '(none — using defaults only)'}
