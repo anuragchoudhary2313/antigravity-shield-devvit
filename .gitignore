@@ -1,3 +1,14 @@
 node_modules/
 dist/
 .env
+
+# Logs and temporary artifacts
+*.txt
+*.json
+*.tsbuildinfo
+!package.json
+!package-lock.json
+!tsconfig.json
+!devvit.yaml
+!.env.example
+!README.md
