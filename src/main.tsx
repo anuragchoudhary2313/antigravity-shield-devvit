@@ -31,7 +31,7 @@ Devvit.addSettings([
     helpText: 'Required for toxicity scoring. Get one at https://developers.perspectiveapi.com/',
     type: 'string',
     isSecret: true,
-    scope: 'installation',
+    scope: 'app',
   },
 ]);
 

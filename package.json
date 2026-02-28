@@ -1,7 +1,7 @@
 {
   "private": true,
-  "name": "antigravity-shield",
-  "version": "0.1.0",
+  "name": "antigrav-shield",
+  "version": "0.0.0",
   "description": "AI-assisted moderation tool for Reddit subreddits — scans content for spam, toxicity, and user risk.",
   "license": "BSD-3-Clause",
   "type": "module",

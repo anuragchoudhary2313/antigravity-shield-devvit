@@ -194,8 +194,8 @@ export function Dashboard(props: DashboardProps): JSX.Element {
           Recent Alerts
         </text>
         {alertList.length > 0 ? (
-          alertList.slice(0, 8).map((alert) => (
-            <AlertRow alert={alert} />
+          alertList.slice(0, 8).map((alert, idx) => (
+            <AlertRow key={`alert-${idx}`} alert={alert} />
           ))
         ) : (
           <hstack
@@ -226,7 +226,7 @@ export function Dashboard(props: DashboardProps): JSX.Element {
             gap="small"
           >
             {offenderList.slice(0, 5).map((entry, idx) => (
-              <OffenderRow entry={entry} rank={idx + 1} />
+              <OffenderRow key={`offender-${entry.username}`} entry={entry} rank={idx + 1} />
             ))}
           </vstack>
         </vstack>
