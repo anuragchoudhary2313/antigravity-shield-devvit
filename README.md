@@ -1,5 +1,7 @@
 # 🚀 AntiGravity Shield
 
+[![Visit on Reddit](https://img.shields.io/badge/Reddit-Visit%20App%20Directory-orange?style=for-the-badge&logo=reddit)](https://developers.reddit.com/apps/antigrav-shield)
+
 AntiGravity Shield is an advanced, privacy-first automated moderation and analytics tool for Reddit communities, built natively on the **Reddit Devvit** platform.
 
 It silently watches all new posts and comments, evaluates them using a multi-engine scoring system (Spam, Toxicity, and User Risk), and flags potentially harmful content to human moderators.
@@ -24,9 +26,9 @@ It silently watches all new posts and comments, evaluates them using a multi-eng
 
 ## 🛠 Installation
 
-1. Select your target subreddit.
-2. Ensure you have the right moderator permissions (Manage Settings, Manage Posts/Comments).
-3. If installing via the app directory, simply hit **Install**.
+1. Visit the [AntiGravity Shield App Directory page](https://developers.reddit.com/apps/antigrav-shield).
+2. Click **Install** and select your target subreddit.
+3. Ensure you have the right moderator permissions (Manage Settings, Manage Posts/Comments).
 
 ## ⚙️ Configuration
 
